@@ -19,6 +19,15 @@ ball = GameSprite('ball.png', 400, 350, width = 100, height = 100)
 
 while game:
     window.fill((200, 200, 255))
+    pressed_keys = key.get_pressed()
+    if pressed_keys[K_w] and player_left.rect.y > 0:
+        player_left.rect.y -= 12
+    if pressed_keys[K_s] and player_left.rect.y < 600:
+        player_left.rect.y += 12
+    if pressed_keys[K_UP] and player_right.rect.y > 0:
+        player_right.rect.y -= 12
+    if pressed_keys[K_DOWN] and player_right.rect.y < 600:
+        player_right.rect.y += 12
     for e in event.get():
         if e.type == QUIT:
             game = False
