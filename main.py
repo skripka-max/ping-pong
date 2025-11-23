@@ -13,10 +13,15 @@ class Platform(sprite.Sprite):
     def draw(self):
         window.blit(self.image, (self.rect.x, self.rect.y))
 
+player_left = Platform('player-left.png', 5, 300)
+player_right = Platform('player-right.png', 865, 300)
+
 while game:
     window.fill((200, 200, 255))
     for e in event.get():
         if e.type == QUIT:
             game = False
+    player_left.draw()
+    player_right.draw()
     display.update()
     timer.tick(60)
