@@ -16,6 +16,8 @@ class GameSprite(sprite.Sprite):
 player_left = GameSprite('player-left.png', 5, 300)
 player_right = GameSprite('player-right.png', 865, 300)
 ball = GameSprite('ball.png', 400, 350, width = 100, height = 100)
+speed_x = 5
+speed_y = 5
 
 while game:
     window.fill((200, 200, 255))
@@ -28,9 +30,14 @@ while game:
         player_right.rect.y -= 12
     if pressed_keys[K_DOWN] and player_right.rect.y < 600:
         player_right.rect.y += 12
+    ball.rect.x += speed_x
+    ball.rect.y += speed_y
+    if ball.rect.y >= 700 or ball.rect.y <= 0:
+        speed_y *= -1
     for e in event.get():
         if e.type == QUIT:
             game = False
+
     player_left.draw()
     player_right.draw()
     ball.draw()
