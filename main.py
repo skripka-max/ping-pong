@@ -20,6 +20,7 @@ speed_x = 5
 speed_y = 5
 
 last = 'left'
+finish = False
 
 font.init()
 font1 = font.SysFont('Arial', 70)
@@ -30,17 +31,18 @@ label_right = font2.render('Player Right wins!', True, (255, 255, 0))
 
 while game:
     window.fill((200, 200, 255))
-    pressed_keys = key.get_pressed()
-    if pressed_keys[K_w] and player_left.rect.y > 0:
-        player_left.rect.y -= 12
-    if pressed_keys[K_s] and player_left.rect.y < 600:
-        player_left.rect.y += 12
-    if pressed_keys[K_UP] and player_right.rect.y > 0:
-        player_right.rect.y -= 12
-    if pressed_keys[K_DOWN] and player_right.rect.y < 600:
-        player_right.rect.y += 12
-    ball.rect.x += speed_x
-    ball.rect.y += speed_y
+    if not finish:
+        pressed_keys = key.get_pressed()
+        if pressed_keys[K_w] and player_left.rect.y > 0:
+            player_left.rect.y -= 12
+        if pressed_keys[K_s] and player_left.rect.y < 600:
+            player_left.rect.y += 12
+        if pressed_keys[K_UP] and player_right.rect.y > 0:
+            player_right.rect.y -= 12
+        if pressed_keys[K_DOWN] and player_right.rect.y < 600:
+            player_right.rect.y += 12
+        ball.rect.x += speed_x
+        ball.rect.y += speed_y
     if ball.rect.y >= 700 or ball.rect.y <= 0:
         speed_y *= -1
     if sprite.collide_rect(player_left, ball):
@@ -49,6 +51,14 @@ while game:
     if sprite.collide_rect(player_right, ball):
         last = 'right'
         speed_x *= -1
+    if ball.rect.x < -100 or ball.rect.x > 900:
+        finish = True
+    if finish:
+        window.blit(win_label, (300, 200))
+        if last == 'left':
+            window.blit(label_left, (340, 300))
+        else:
+            window.blit(label_right, (320, 300))
     for e in event.get():
         if e.type == QUIT:
             game = False
