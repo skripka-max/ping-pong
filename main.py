@@ -34,6 +34,8 @@ while game:
     ball.rect.y += speed_y
     if ball.rect.y >= 700 or ball.rect.y <= 0:
         speed_y *= -1
+    if sprite.collide_rect(player_left, ball) or sprite.collide_rect(player_right, ball):
+        speed_x *= -1
     for e in event.get():
         if e.type == QUIT:
             game = False
