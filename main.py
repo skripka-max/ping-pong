@@ -19,6 +19,15 @@ ball = GameSprite('ball.png', 400, 350, width = 100, height = 100)
 speed_x = 5
 speed_y = 5
 
+last = 'left'
+
+font.init()
+font1 = font.SysFont('Arial', 70)
+win_label = font1.render('Game over.', True, (255, 255, 255))
+font2 = font.SysFont('Arial', 40)
+label_left = font2.render('Player left wins!', True, (0, 255, 0))
+label_right = font2.render('Player Right wins!', True, (255, 255, 0))
+
 while game:
     window.fill((200, 200, 255))
     pressed_keys = key.get_pressed()
@@ -34,7 +43,11 @@ while game:
     ball.rect.y += speed_y
     if ball.rect.y >= 700 or ball.rect.y <= 0:
         speed_y *= -1
-    if sprite.collide_rect(player_left, ball) or sprite.collide_rect(player_right, ball):
+    if sprite.collide_rect(player_left, ball):
+        last = 'left'
+        speed_x *= -1
+    if sprite.collide_rect(player_right, ball):
+        last = 'right'
         speed_x *= -1
     for e in event.get():
         if e.type == QUIT:
